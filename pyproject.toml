@@ -1,3 +1,50 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2022 The Foundry Visionmongers Ltd
+
+# The metadata here should be kept in sync with the main OpenAssetIO
+# repository (Python versions, platforms, etc): https://github.com/OpenAssetIO/OpenAssetIO
+
+[build-system]
+requires = [
+    "setuptools>=65.5.0"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openassetio-traitgen"
+version = "1.0.0a1"
+requires-python = ">=3.7"
+readme = "README.md"
+
+authors = [
+    { name = "Contributors to the OpenAssetIO project", email = "openassetio-discussion@lists.aswf.io" }
+]
+description = """\
+    Generate OpenAssetIO Trait and Specification classes from a simple YAML description.\
+    """
+keywords = ["openassetio", "codegen", "trait"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Build Tools",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Code Generators"
+]
+
+[project.urls]
+OpenAssetIO = "https://github.com/OpenAssetIO/OpenAssetIO"
+Source = "https://github.com/OpenAssetIO/OpenAssetIO-TraitGen"
+Issues = "https://github.com/OpenAssetIO/OpenAssetIO-TraitGen/issues"
+
 # NB: This requires the use of pyproject-flake8
 [tool.flake8]
 max-line-length = 99
