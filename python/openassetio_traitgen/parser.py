@@ -92,7 +92,8 @@ def _unpack_specifications(model: dict, package_id: str) -> List[datamodel.Names
                 trait_set=_unpack_trait_set(definition["traitSet"], package_id),
                 usage=definition.get("usage", []),
             )
-            for name, definition in data["members"].items()
+            for name, props in data["members"].items()
+            for version_num, definition in props["versions"].items()
         ]
         specifications.sort(key=_byId)
 
@@ -186,7 +187,8 @@ def _unpack_traits(
                 properties=_unpack_properties(definition.get("properties", {})),
                 usage=definition.get("usage", []),
             )
-            for name, definition in data["members"].items()
+            for name, props in data["members"].items()
+            for version_num, definition in props["versions"].items()
         ]
         traits.sort(key=_byName)
 

@@ -114,8 +114,12 @@ def description_exotic_values():
                 "description": "n",
                 "members": {
                     "t&": {
-                        "description": "t",
-                        "properties": {"p$": {"type": "boolean", "description": "p"}},
+                        "versions": {
+                            "1": {
+                                "description": "t",
+                                "properties": {"p$": {"type": "boolean", "description": "p"}},
+                            }
+                        }
                     }
                 },
             }
@@ -125,8 +129,14 @@ def description_exotic_values():
                 "description": "",
                 "members": {
                     "s^": {
-                        "description": "",
-                        "traitSet": [{"package": "p📦p", "namespace": "t!n", "name": "t&"}],
+                        "versions": {
+                            "1": {
+                                "description": "",
+                                "traitSet": [
+                                    {"package": "p📦p", "namespace": "t!n", "name": "t&"}
+                                ],
+                            }
+                        }
                     }
                 },
             }
