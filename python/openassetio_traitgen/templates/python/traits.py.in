@@ -15,7 +15,7 @@ from typing import Union
 from openassetio.trait import TraitsData
 
 {% for trait in namespace.members %}
-class {{ trait.name | to_py_class_name }}Trait:
+class {{ trait.name | to_py_class_name }}Trait_v{{ trait.version }}:
     """
     {{ trait.description | wordwrap(68) | indent(4) }}
     {% if trait.usage -%}

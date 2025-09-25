@@ -41,6 +41,21 @@ traits:
                 description: A bool-typed property.
               # TODO(DF): Add dictProperty once supported.
 
+      MultipleVersions:
+        versions:
+          "1":
+            description: A trait with multiple versions, version 1.
+            properties:
+              oldProperty:
+                type: string
+                description: A deprecated string-typed property.
+          "2":
+            description: A trait with multiple versions, version 2.
+            properties:
+              newProperty:
+                type: integer
+                description: A new int-typed property.
+
   anotherNamespace:
     description: Another Namespace
     members:
@@ -90,3 +105,24 @@ specifications:
             usage:
               - entity
               - managementPolicy
+
+      MultipleVersionsOfTrait:
+        versions:
+          "1":
+            description: Version 1 of a specification referencing version 1 of a trait.
+            traitSet:
+              - namespace: aNamespace
+                name: NoProperties
+                version: "1"
+              - namespace: aNamespace
+                name: MultipleVersions
+                version: "1"
+          "2":
+            description: Version 2 of a specification referencing version 2 of a trait.
+            traitSet:
+              - namespace: aNamespace
+                name: NoProperties
+                version: "1"
+              - namespace: aNamespace
+                name: MultipleVersions
+                version: "2"

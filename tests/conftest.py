@@ -133,7 +133,12 @@ def description_exotic_values():
                             "1": {
                                 "description": "",
                                 "traitSet": [
-                                    {"package": "p📦p", "namespace": "t!n", "name": "t&", "version": "1"}
+                                    {
+                                        "package": "p📦p",
+                                        "namespace": "t!n",
+                                        "name": "t&",
+                                        "version": "1",
+                                    }
                                 ],
                             }
                         }
@@ -158,7 +163,7 @@ def declaration_all():
                 description="A Namespace",
                 members=[
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-all:aNamespace.AllProperties",
+                        id="openassetio-traitgen-test-all:aNamespace.AllProperties.v1",
                         version="1",
                         name="AllProperties",
                         description="A trait with properties of all types.",
@@ -188,7 +193,35 @@ def declaration_all():
                         ],
                     ),
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-all:aNamespace.NoProperties",
+                        id="openassetio-traitgen-test-all:aNamespace.MultipleVersions.v1",
+                        version="1",
+                        name="MultipleVersions",
+                        description="A trait with multiple versions, version 1.",
+                        usage=[],
+                        properties=[
+                            datamodel.PropertyDeclaration(
+                                id="oldProperty",
+                                type=datamodel.PropertyType.STRING,
+                                description="A deprecated string-typed property.",
+                            ),
+                        ],
+                    ),
+                    datamodel.TraitDeclaration(
+                        id="openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2",
+                        version="2",
+                        name="MultipleVersions",
+                        description="A trait with multiple versions, version 2.",
+                        usage=[],
+                        properties=[
+                            datamodel.PropertyDeclaration(
+                                id="newProperty",
+                                type=datamodel.PropertyType.INTEGER,
+                                description="A new int-typed property.",
+                            ),
+                        ],
+                    ),
+                    datamodel.TraitDeclaration(
+                        id="openassetio-traitgen-test-all:aNamespace.NoProperties.v1",
                         version="1",
                         name="NoProperties",
                         description="Another trait, this time with no properties.",
@@ -196,7 +229,7 @@ def declaration_all():
                         usage=[],
                     ),
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage",
+                        id="openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage.v1",
                         version="1",
                         name="NoPropertiesMultipleUsage",
                         description="Another trait, this time with multiple usage.",
@@ -210,7 +243,7 @@ def declaration_all():
                 description="Another Namespace",
                 members=[
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-all:anotherNamespace.NoProperties",
+                        id="openassetio-traitgen-test-all:anotherNamespace.NoProperties.v1",
                         version="1",
                         name="NoProperties",
                         description="Another NoProperties trait in a different namespace",
@@ -234,7 +267,7 @@ def declaration_all():
                         usage=["entity", "managementPolicy"],
                         trait_set=[
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-all:aNamespace.NoProperties",
+                                id="openassetio-traitgen-test-all:aNamespace.NoProperties.v1",
                                 package="openassetio-traitgen-test-all",
                                 namespace="aNamespace",
                                 name="NoProperties",
@@ -246,7 +279,7 @@ def declaration_all():
                                 ),
                             ),
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-traits-only:aNamespace.NoProperties",
+                                id="openassetio-traitgen-test-traits-only:aNamespace.NoProperties.v1",
                                 package="openassetio-traitgen-test-traits-only",
                                 namespace="aNamespace",
                                 name="NoProperties",
@@ -260,13 +293,65 @@ def declaration_all():
                         ],
                     ),
                     datamodel.SpecificationDeclaration(
+                        id="MultipleVersionsOfTrait",
+                        version="1",
+                        description=(
+                            "Version 1 of a specification referencing version 1 of a trait."
+                        ),
+                        usage=[],
+                        trait_set=[
+                            datamodel.TraitReference(
+                                id="openassetio-traitgen-test-all:aNamespace.MultipleVersions.v1",
+                                package="openassetio-traitgen-test-all",
+                                namespace="aNamespace",
+                                name="MultipleVersions",
+                                version="1",
+                                unique_name_parts=("MultipleVersions",),
+                            ),
+                            datamodel.TraitReference(
+                                id="openassetio-traitgen-test-all:aNamespace.NoProperties.v1",
+                                package="openassetio-traitgen-test-all",
+                                namespace="aNamespace",
+                                name="NoProperties",
+                                version="1",
+                                unique_name_parts=("NoProperties",),
+                            ),
+                        ],
+                    ),
+                    datamodel.SpecificationDeclaration(
+                        id="MultipleVersionsOfTrait",
+                        version="2",
+                        description=(
+                            "Version 2 of a specification referencing version 2 of a" " trait."
+                        ),
+                        usage=[],
+                        trait_set=[
+                            datamodel.TraitReference(
+                                id="openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2",
+                                package="openassetio-traitgen-test-all",
+                                namespace="aNamespace",
+                                name="MultipleVersions",
+                                version="2",
+                                unique_name_parts=("MultipleVersions",),
+                            ),
+                            datamodel.TraitReference(
+                                id="openassetio-traitgen-test-all:aNamespace.NoProperties.v1",
+                                package="openassetio-traitgen-test-all",
+                                namespace="aNamespace",
+                                name="NoProperties",
+                                version="1",
+                                unique_name_parts=("NoProperties",),
+                            ),
+                        ],
+                    ),
+                    datamodel.SpecificationDeclaration(
                         id="OneExternalTrait",
                         version="1",
                         description="A specification referencing traits in another package.",
                         usage=[],
                         trait_set=[
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-traits-only:test.Another",
+                                id="openassetio-traitgen-test-traits-only:test.Another.v1",
                                 package="openassetio-traitgen-test-traits-only",
                                 namespace="test",
                                 name="Another",
@@ -282,7 +367,7 @@ def declaration_all():
                         usage=[],
                         trait_set=[
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-all:aNamespace.NoProperties",
+                                id="openassetio-traitgen-test-all:aNamespace.NoProperties.v1",
                                 package="openassetio-traitgen-test-all",
                                 namespace="aNamespace",
                                 name="NoProperties",
@@ -290,7 +375,7 @@ def declaration_all():
                                 unique_name_parts=("aNamespace", "NoProperties"),
                             ),
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-all:anotherNamespace.NoProperties",
+                                id="openassetio-traitgen-test-all:anotherNamespace.NoProperties.v1",
                                 package="openassetio-traitgen-test-all",
                                 namespace="anotherNamespace",
                                 name="NoProperties",
@@ -319,7 +404,7 @@ def declaration_traits_only():
                 description="A namespace that overlaps with the all package",
                 members=[
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-traits-only:aNamespace.NoProperties",
+                        id="openassetio-traitgen-test-traits-only:aNamespace.NoProperties.v1",
                         name="NoProperties",
                         version="1",
                         description="Yet Another No Properties Trait",
@@ -333,7 +418,7 @@ def declaration_traits_only():
                 description="A namespace for testing.",
                 members=[
                     datamodel.TraitDeclaration(
-                        id="openassetio-traitgen-test-traits-only:test.Another",
+                        id="openassetio-traitgen-test-traits-only:test.Another.v1",
                         name="Another",
                         version="1",
                         description="Yet Another Trait",
@@ -368,7 +453,7 @@ def declaration_specifications_only():
                         usage=[],
                         trait_set=[
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-all:aNamespace.AllProperties",
+                                id="openassetio-traitgen-test-all:aNamespace.AllProperties.v1",
                                 package="openassetio-traitgen-test-all",
                                 namespace="aNamespace",
                                 name="AllProperties",
@@ -376,7 +461,7 @@ def declaration_specifications_only():
                                 unique_name_parts=("AllProperties",),
                             ),
                             datamodel.TraitReference(
-                                id="openassetio-traitgen-test-traits-only:test.Another",
+                                id="openassetio-traitgen-test-traits-only:test.Another.v1",
                                 package="openassetio-traitgen-test-traits-only",
                                 namespace="test",
                                 name="Another",
@@ -412,7 +497,7 @@ def declaration_exotic_values():
                 description="n",
                 members=[
                     datamodel.TraitDeclaration(
-                        id="p📦p:t!n.t&",
+                        id="p📦p:t!n.t&.v1",
                         version="1",
                         name="t&",
                         description="t",
@@ -438,7 +523,7 @@ def declaration_exotic_values():
                         usage=[],
                         trait_set=[
                             datamodel.TraitReference(
-                                id="p📦p:t!n.t&",
+                                id="p📦p:t!n.t&.v1",
                                 package="p📦p",
                                 namespace="t!n",
                                 name="t&",
@@ -471,7 +556,7 @@ def declaration_invalid_identifiers():
                     description="",
                     members=[
                         datamodel.TraitDeclaration(
-                            id="some_trait",
+                            id="some_trait.v1",
                             version="1",
                             name="some_trait",
                             description="",
@@ -493,7 +578,7 @@ def declaration_invalid_identifiers():
                             usage=[],
                             trait_set=[
                                 datamodel.TraitReference(
-                                    id="some_trait",
+                                    id="some_trait.v1",
                                     name="some_trait",
                                     namespace="some_namespace",
                                     package="some_package",

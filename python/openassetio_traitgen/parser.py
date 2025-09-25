@@ -138,7 +138,7 @@ def _unpack_trait_set(trait_set: List[dict], package_id: str) -> List[datamodel.
         name = trait["name"]
         version = trait["version"]
 
-        identifier = _build_trait_id(package, namespace, name)
+        identifier = _build_trait_id(package, namespace, name, version)
 
         # Check to see which of the possible combinations of reference
         # parts is unique for this trait.
@@ -166,8 +166,8 @@ def _unpack_trait_set(trait_set: List[dict], package_id: str) -> List[datamodel.
     return references
 
 
-def _build_trait_id(package: str, namespace: str, name: str) -> str:
-    return f"{package}:{namespace}.{name}"
+def _build_trait_id(package: str, namespace: str, name: str, version: str) -> str:
+    return f"{package}:{namespace}.{name}.v{version}"
 
 
 def _unpack_traits(
@@ -184,7 +184,7 @@ def _unpack_traits(
     for namespace, data in model.items():
         traits = [
             datamodel.TraitDeclaration(
-                id=_build_trait_id(package_id, namespace, name),
+                id=_build_trait_id(package_id, namespace, name, version_num),
                 name=name,
                 version=version_num,
                 description=definition.get("description", "").strip(),
