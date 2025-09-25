@@ -18,6 +18,8 @@ specifications:
               - package: openassetio-traitgen-test-all
                 namespace: aNamespace
                 name: AllProperties
+                version: "1"
               - package: openassetio-traitgen-test-traits-only
                 namespace: test
                 name: Another
+                version: "1"

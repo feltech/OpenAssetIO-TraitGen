@@ -82,6 +82,8 @@ class TraitDeclaration(NamedTuple):
     # A short name for the Trait that is only unique within its
     # namespace.
     name: str
+    # Version of the trait.
+    version: str
     # A user-facing description of the Trait and its purpose.
     description: str
     # User-facing hints as to the usage of this trait, in relation to
@@ -115,6 +117,8 @@ class TraitReference(NamedTuple):
     namespace: str
     # The package the trait belongs to
     package: str
+    # Version of the trait
+    version: str
     # The shortest list of elements from package, namespace and name
     # that is required to form a unique name for this trait
     # relative to the specification. These should be used
@@ -132,6 +136,8 @@ class SpecificationDeclaration(NamedTuple):
 
     # The unique name of Specification within its namespace.
     id: str
+    # Version of the specification.
+    version: str
     # A user-facing description of the Specification and its purpose.
     description: str
     # User-facing hints as to the usage of this trait, in relation to

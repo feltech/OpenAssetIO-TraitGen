@@ -88,6 +88,7 @@ def _unpack_specifications(model: dict, package_id: str) -> List[datamodel.Names
         specifications = [
             datamodel.SpecificationDeclaration(
                 id=name,
+                version=version_num,
                 description=definition.get("description", "").strip(),
                 trait_set=_unpack_trait_set(definition["traitSet"], package_id),
                 usage=definition.get("usage", []),
@@ -135,6 +136,7 @@ def _unpack_trait_set(trait_set: List[dict], package_id: str) -> List[datamodel.
         package = trait.get("package", package_id)
         namespace = trait["namespace"]
         name = trait["name"]
+        version = trait["version"]
 
         identifier = _build_trait_id(package, namespace, name)
 
@@ -154,6 +156,7 @@ def _unpack_trait_set(trait_set: List[dict], package_id: str) -> List[datamodel.
                 name=name,
                 namespace=namespace,
                 package=package,
+                version=version,
                 unique_name_parts=unique_name_parts,
             )
         )
@@ -183,6 +186,7 @@ def _unpack_traits(
             datamodel.TraitDeclaration(
                 id=_build_trait_id(package_id, namespace, name),
                 name=name,
+                version=version_num,
                 description=definition.get("description", "").strip(),
                 properties=_unpack_properties(definition.get("properties", {})),
                 usage=definition.get("usage", []),

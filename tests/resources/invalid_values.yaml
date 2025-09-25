@@ -28,3 +28,4 @@ specifications:
             traitSet:
               - namespace: t!n
                 name: t&
+                version: "1"

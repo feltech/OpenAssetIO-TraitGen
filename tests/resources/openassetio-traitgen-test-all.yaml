@@ -60,8 +60,10 @@ specifications:
             traitSet:
               - namespace: aNamespace
                 name: NoProperties
+                version: "1"
               - namespace: anotherNamespace
                 name: NoProperties
+                version: "1"
 
       OneExternalTrait:
         versions:
@@ -71,6 +73,7 @@ specifications:
               - package: openassetio-traitgen-test-traits-only
                 namespace: test
                 name: Another
+                version: "1"
 
       LocalAndExternalTrait:
         versions:
@@ -80,8 +83,10 @@ specifications:
               - package: openassetio-traitgen-test-traits-only
                 namespace: aNamespace
                 name: NoProperties
+                version: "1"
               - namespace: aNamespace
                 name: NoProperties
+                version: "1"
             usage:
               - entity
               - managementPolicy

@@ -92,6 +92,7 @@ def some_trait_declarations():
         datamodel.TraitDeclaration(
             id="package:namespace.Name1",
             name="Name1",
+            version="1",
             description="A trait",
             properties=[],
             usage=[],
@@ -99,6 +100,7 @@ def some_trait_declarations():
         datamodel.TraitDeclaration(
             id="package:namespace.Name2",
             name="Name2",
+            version="1",
             description="Another trait",
             properties=[],
             usage=[],
@@ -111,6 +113,7 @@ def some_specification_declarations():
     return [
         datamodel.SpecificationDeclaration(
             id="Specification1",
+            version="1",
             description="A specification",
             usage=[],
             trait_set=[
@@ -118,6 +121,7 @@ def some_specification_declarations():
                     package="packageB",
                     namespace="namespace",
                     name="cat",
+                    version="1",
                     unique_name_parts=("cat",),
                     id="packageB:namespace.cat",
                 ),
@@ -125,6 +129,7 @@ def some_specification_declarations():
                     package="packageA",
                     namespace="namespace",
                     name="hat",
+                    version="1",
                     unique_name_parts=("hat",),
                     id="packageA:namespace.hat",
                 ),
@@ -132,6 +137,7 @@ def some_specification_declarations():
         ),
         datamodel.SpecificationDeclaration(
             id="Specification2",
+            version="1",
             description="Another specification",
             usage=[],
             trait_set=[
@@ -139,6 +145,7 @@ def some_specification_declarations():
                     package="packageB",
                     namespace="namespace",
                     name="cat",
+                    version="1",
                     unique_name_parts=("cat",),
                     id="packageB:namespace.cat",
                 ),
@@ -146,6 +153,7 @@ def some_specification_declarations():
                     package="packageC",
                     namespace="namespace",
                     name="mouse",
+                    version="1",
                     unique_name_parts=("mouse",),
                     id="packageC:namespace.mouse",
                 ),
