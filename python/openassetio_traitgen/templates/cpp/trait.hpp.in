@@ -22,20 +22,22 @@ namespace traits::{{ namespace.id | to_cpp_namespace_name }} {
 
 namespace property = openassetio_abi::trait::property;
 
+{%- for trait in versions %}
+{% set classname = trait.name | to_cpp_class_name ~ 'Trait_v' ~ trait.version -%}
 /**
  * {{ trait.description |  wordwrap(69, wrapstring="\n* ") | indent(1) }}
 {%- if trait.usage %}
  * Usage: {{ trait.usage | join(', ') }}
 {%- endif %}
  */
-class {{ trait.name | to_cpp_class_name }}Trait {
+class {{ classname }} {
 public:
   static inline const openassetio_abi::trait::TraitId kId = "{{ trait.id }}";
 
   /**
    * Construct this trait view, wrapping the given TraitsData instance.
    */
-  explicit {{ trait.name | to_cpp_class_name }}Trait(openassetio_abi::trait::TraitsDataPtr traitsData)
+  explicit {{ classname }}(openassetio_abi::trait::TraitsDataPtr traitsData)
     : traitsData_{std::move(traitsData)}
   {}
 
@@ -130,6 +132,8 @@ public:
 private:
   openassetio_abi::trait::TraitsDataPtr traitsData_;
 };
+
+{% endfor %}
 }  // namespace traits::{{ namespace.id | to_cpp_namespace_name }}
 }  // namespace {{ traitgen_abi_version }}
 }  // namespace {{ package.id | to_cpp_namespace_name }}
