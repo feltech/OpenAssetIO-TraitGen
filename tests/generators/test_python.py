@@ -107,7 +107,7 @@ class Test_python_package_all_traits_aNamespace_NoPropertiesTrait:
     def test_kId_is_declaration_id(self, module_all):
         assert (
             module_all.traits.aNamespace.NoPropertiesTrait_v1.kId
-            == "openassetio-traitgen-test-all:aNamespace.NoProperties.v1"
+            == "openassetio-traitgen-test-all:aNamespace.NoProperties"
         )
 
 
@@ -124,7 +124,7 @@ class Test_python_package_all_traits_aNamespace_NoPropertiesMultipleUsageTrait:
     def test_kId_is_declaration_id(self, module_all):
         assert (
             module_all.traits.aNamespace.NoPropertiesMultipleUsageTrait_v1.kId
-            == "openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage.v1"
+            == "openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage"
         )
 
 
@@ -140,7 +140,7 @@ class Test_python_package_all_traits_aNamespace_AllPropertiesTrait:
     def test_kId_is_declaration_id(self, module_all):
         assert (
             module_all.traits.aNamespace.AllPropertiesTrait_v1.kId
-            == "openassetio-traitgen-test-all:aNamespace.AllProperties.v1"
+            == "openassetio-traitgen-test-all:aNamespace.AllProperties"
         )
 
     @pytest.mark.parametrize("property_type", ["string", "int", "float", "bool"])
@@ -363,9 +363,7 @@ class Test_python_package_specifications_only:
 
 class Test_AllPropertiesTrait:
     def test_traitId_is_composed_of_package_aNamespace_and_name(self, all_properties_trait):
-        assert (
-            all_properties_trait.kId == "openassetio-traitgen-test-all:aNamespace.AllProperties.v1"
-        )
+        assert all_properties_trait.kId == "openassetio-traitgen-test-all:aNamespace.AllProperties"
 
 
 class Test_AllPropertiesTrait_isImbued:
@@ -544,7 +542,7 @@ class Test_AllPropertiesTrait_set:
 class Test_MultipleVersionsTrait:
     def test_version_1_has_expected_id(self, module_all):
         assert module_all.traits.aNamespace.MultipleVersionsTrait_v1.kId == (
-            "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v1"
+            "openassetio-traitgen-test-all:aNamespace.MultipleVersions"
         )
 
     def test_version_2_has_expected_id(self, module_all):

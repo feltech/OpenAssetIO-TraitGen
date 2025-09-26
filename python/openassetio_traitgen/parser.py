@@ -167,7 +167,15 @@ def _unpack_trait_set(trait_set: List[dict], package_id: str) -> List[datamodel.
 
 
 def _build_trait_id(package: str, namespace: str, name: str, version: str) -> str:
-    return f"{package}:{namespace}.{name}.v{version}"
+    """
+    Builds a trait ID from the supplied components.
+
+    The first version "1" omits the version suffix to maintain backward
+    compatibility with existing traits.
+    """
+    if version != "1":
+        return f"{package}:{namespace}.{name}.v{version}"
+    return f"{package}:{namespace}.{name}"
 
 
 def _unpack_traits(

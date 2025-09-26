@@ -357,7 +357,7 @@ class Test_cpp_package_all_specifications_test_TwoLocalTraitsSpecification:
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.NoProperties.v1'
+   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.NoProperties'
    * trait wrapped around the data held in this instance.
    */
 """.strip()
@@ -374,7 +374,7 @@ class Test_cpp_package_all_specifications_test_TwoLocalTraitsSpecification:
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-all:anotherNamespace.NoProperties.v1'
+   * Returns the view for the 'openassetio-traitgen-test-all:anotherNamespace.NoProperties'
    * trait wrapped around the data held in this instance.
    */
 """.strip()
@@ -410,7 +410,7 @@ class Test_cpp_package_all_specifications_test_OneExternalTraitSpecification:
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-traits-only:test.Another.v1'
+   * Returns the view for the 'openassetio-traitgen-test-traits-only:test.Another'
    * trait wrapped around the data held in this instance.
    */
 """.strip()
@@ -447,7 +447,7 @@ class Test_cpp_package_all_specifications_test_LocalAndExternalTraitSpecificatio
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.NoProperties.v1'
+   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.NoProperties'
    * trait wrapped around the data held in this instance.
    */
 """.strip()
@@ -464,7 +464,7 @@ class Test_cpp_package_all_specifications_test_LocalAndExternalTraitSpecificatio
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-traits-only:aNamespace.NoProperties.v1'
+   * Returns the view for the 'openassetio-traitgen-test-traits-only:aNamespace.NoProperties'
    * trait wrapped around the data held in this instance.
    */
 """.strip()
@@ -500,7 +500,7 @@ class Test_cpp_package_all_specifications_test_MultipleVersionsOfTrait:
             )
             == """
   /**
-   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.MultipleVersions.v1'
+   * Returns the view for the 'openassetio-traitgen-test-all:aNamespace.MultipleVersions'
    * trait wrapped around the data held in this instance.
    */
 """.strip()

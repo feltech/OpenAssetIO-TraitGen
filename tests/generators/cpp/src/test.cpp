@@ -144,16 +144,16 @@ TEST_CASE("openassetio_traitgen_test_all - specifications have expected trait se
 
 TEST_CASE("openassetio_traitgen_test_all - traits have expected IDs") {
   CHECK(openassetio_traitgen_test_all::traits::aNamespace::NoPropertiesTrait_v1::kId ==
-        "openassetio-traitgen-test-all:aNamespace.NoProperties.v1");
+        "openassetio-traitgen-test-all:aNamespace.NoProperties");
   CHECK(
       openassetio_traitgen_test_all::traits::aNamespace::NoPropertiesMultipleUsageTrait_v1::kId ==
-      "openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage.v1");
+      "openassetio-traitgen-test-all:aNamespace.NoPropertiesMultipleUsage");
   CHECK(openassetio_traitgen_test_all::traits::aNamespace::AllPropertiesTrait_v1::kId ==
-        "openassetio-traitgen-test-all:aNamespace.AllProperties.v1");
+        "openassetio-traitgen-test-all:aNamespace.AllProperties");
   CHECK(openassetio_traitgen_test_all::traits::anotherNamespace::NoPropertiesTrait_v1::kId ==
-        "openassetio-traitgen-test-all:anotherNamespace.NoProperties.v1");
+        "openassetio-traitgen-test-all:anotherNamespace.NoProperties");
   CHECK(openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v1::kId ==
-        "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v1");
+        "openassetio-traitgen-test-all:aNamespace.MultipleVersions");
   CHECK(openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v2::kId ==
         "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2");
 }
