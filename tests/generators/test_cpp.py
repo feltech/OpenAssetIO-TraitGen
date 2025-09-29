@@ -258,6 +258,7 @@ class Test_cpp_package_all_traits_aNamespace_MultipleVersionsTrait:
             == """
 /**
  * A trait with multiple versions, version 1.
+ * Usage: entity
  */
  """.strip()
         )

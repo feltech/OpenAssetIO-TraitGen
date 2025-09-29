@@ -197,7 +197,7 @@ def declaration_all():
                         version="1",
                         name="MultipleVersions",
                         description="A trait with multiple versions, version 1.",
-                        usage=[],
+                        usage=["entity"],
                         properties=[
                             datamodel.PropertyDeclaration(
                                 id="oldProperty",

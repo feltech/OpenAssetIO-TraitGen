@@ -140,7 +140,7 @@ private:
 /**
  * {{ trait.description |  wordwrap(69, wrapstring="\n* ") | indent(1) }}
 {%- if trait.usage %}
-    * Usage: {{ trait.usage | join(', ') }}
+ * Usage: {{ trait.usage | join(', ') }}
 {%- endif %}
  */
 class {{ base_classname }} : public {{ base_classname }}_v1 {

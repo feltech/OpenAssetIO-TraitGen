@@ -49,6 +49,8 @@ traits:
               oldProperty:
                 type: string
                 description: A deprecated string-typed property.
+            usage:
+              - entity
           "2":
             description: A trait with multiple versions, version 2.
             properties:

@@ -555,6 +555,7 @@ class Test_MultipleVersionsTrait:
             module_all.traits.aNamespace.MultipleVersionsTrait_v1.__doc__
             == """
     A trait with multiple versions, version 1.
+    Usage: entity
     """
         )
 
