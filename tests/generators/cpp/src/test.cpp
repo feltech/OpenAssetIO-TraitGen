@@ -158,6 +158,37 @@ TEST_CASE("openassetio_traitgen_test_all - traits have expected IDs") {
         "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2");
 }
 
+SCENARIO("Unversioned trait") {
+  using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait;
+  using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v1;
+  using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v2;
+
+  THEN("unversioned trait is a subclass of v1") {
+    STATIC_REQUIRE(std::is_base_of_v<MultipleVersionsTrait_v1, MultipleVersionsTrait>);
+  }
+
+  WHEN("ID of unversioned trait is retrieved") {
+    const auto traitId = MultipleVersionsTrait::kId;
+
+    THEN("unversioned trait ID is the same as v1") {
+      CHECK(traitId == MultipleVersionsTrait_v1::kId);
+      CHECK(traitId != MultipleVersionsTrait_v2::kId);
+    }
+  }
+
+  WHEN("unversioned trait is constructed") {
+    const auto traitsData = openassetio::trait::TraitsData::make();
+    // Construct rather than using static_assert to be confident that
+    // the constructor is available.
+    const MultipleVersionsTrait trait{traitsData};
+
+    THEN("unversioned trait has same members as v1") {
+      // Just checking that the member function exists.
+      CHECK(!trait.getOldProperty().has_value());
+    }
+  }
+}
+
 namespace openassetio_traitgen_test_traits_only {
 // Will fail if `specifications` is already defined (i.e. as namespace).
 constexpr std::string_view specifications = "not defined";  // NOLINT

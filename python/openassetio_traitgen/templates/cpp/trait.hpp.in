@@ -134,6 +134,19 @@ private:
 };
 
 {% endfor %}
+
+{%- set trait = versions[0] %}
+{%- set base_classname = trait.name | to_cpp_class_name ~ "Trait" %}
+/**
+ * {{ trait.description |  wordwrap(69, wrapstring="\n* ") | indent(1) }}
+{%- if trait.usage %}
+    * Usage: {{ trait.usage | join(', ') }}
+{%- endif %}
+ */
+class {{ base_classname }} : public {{ base_classname }}_v1 {
+public:
+using {{ base_classname }}_v1::{{ base_classname }}_v1;
+};
 }  // namespace traits::{{ namespace.id | to_cpp_namespace_name }}
 }  // namespace {{ traitgen_abi_version }}
 }  // namespace {{ package.id | to_cpp_namespace_name }}

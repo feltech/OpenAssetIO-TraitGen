@@ -320,6 +320,21 @@ class Test_cpp_package_all_traits_aNamespace_MultipleVersionsTrait:
 """.strip()
         )
 
+    def test_unversioned_has_same_docstring_as_v1(self, docstring_for):
+        assert docstring_for(
+            "openassetio_traitgen_test_all",
+            is_specification=False,
+            namespace="aNamespace",
+            name="MultipleVersionsTrait",
+            version="",
+        ) == docstring_for(
+            "openassetio_traitgen_test_all",
+            is_specification=False,
+            namespace="aNamespace",
+            name="MultipleVersionsTrait",
+            version="1",
+        )
+
 
 class Test_cpp_package_all_specifications_test_TwoLocalTraitsSpecification:
     def test_docstring_contains_description(self, docstring_for):
@@ -738,10 +753,11 @@ def docstring_for(rootnode_for, cpp_language):
             query = cpp_language.query("""((comment) . (preproc_include)) @docstring""")
             return query.captures(root_node)[0][0].text.decode()
 
+        class_name = f"{name}_v{version}" if version else name
         query = cpp_language.query(
             f"""(
             (comment) @docstring . (class_specifier name: (type_identifier) @struct_name) @struct
-            (#eq? @struct_name "{name}_v{version}")
+            (#eq? @struct_name "{class_name}")
         )"""
         )
 
