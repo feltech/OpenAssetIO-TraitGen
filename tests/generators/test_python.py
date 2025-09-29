@@ -590,8 +590,9 @@ class Test_MultipleVersionsTrait:
             for attr_name in module_all.traits.aNamespace.MultipleVersionsTrait.__dict__
             if attr_name not in builtin_attr_names
         ]
-        # Ensure no overrides of the base class.
-        assert user_defined_attr_names == []
+        # Ensure no overrides of the base class, other than constructor
+        # (for deprecation warning).
+        assert user_defined_attr_names == ["__init__"]
 
     def test_unversioned_has_same_docstring_as_version_1_but_with_deprecation(self, module_all):
         assert (
@@ -607,6 +608,24 @@ class Test_MultipleVersionsTrait:
             module_all.traits.aNamespace.MultipleVersionsTrait.__doc__
             != module_all.traits.aNamespace.MultipleVersionsTrait_v2.__doc__
         )
+
+    def test_when_unversioned_constructed_then_logs_deprecation_warning(self, module_all):
+        expected_warning = (
+            "Unversioned trait view classes are deprecated. Please switch from"
+            " MultipleVersionsTrait to MultipleVersionsTrait_v1."
+        )
+        with pytest.deprecated_call(match=expected_warning):
+            module_all.traits.aNamespace.MultipleVersionsTrait(TraitsData())
+
+    def test_when_unversioned_constructed_then_calls_base_constructor(self, module_all):
+        data = TraitsData()
+        trait = module_all.traits.aNamespace.MultipleVersionsTrait(data)
+        expected_value = "some string"
+        # Ensure TraitsData is passed through (i.e. no AttributeError).
+        trait.setOldProperty(expected_value)
+        actual_value = trait.getOldProperty()
+
+        assert actual_value == expected_value
 
 
 class Test_LocalAndExternalTraitSpecification:
