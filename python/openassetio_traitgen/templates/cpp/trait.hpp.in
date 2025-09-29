@@ -142,6 +142,9 @@ private:
 {%- if trait.usage %}
  * Usage: {{ trait.usage | join(', ') }}
 {%- endif %}
+ *
+ * @deprecated Unversioned trait view classes are deprecated, please use
+ * {{ base_classname }}_v1 explicitly.
  */
 class {{ base_classname }} : public {{ base_classname }}_v1 {
 public:

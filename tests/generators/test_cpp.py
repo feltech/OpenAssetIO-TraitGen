@@ -321,20 +321,32 @@ class Test_cpp_package_all_traits_aNamespace_MultipleVersionsTrait:
 """.strip()
         )
 
-    def test_unversioned_has_same_docstring_as_v1(self, docstring_for):
-        assert docstring_for(
-            "openassetio_traitgen_test_all",
-            is_specification=False,
-            namespace="aNamespace",
-            name="MultipleVersionsTrait",
-            version="",
-        ) == docstring_for(
+    def test_unversioned_has_same_docstring_as_v1_but_with_deprecation(self, docstring_for):
+        v1_docstring = docstring_for(
             "openassetio_traitgen_test_all",
             is_specification=False,
             namespace="aNamespace",
             name="MultipleVersionsTrait",
             version="1",
         )
+
+        expected_docstring = (
+            v1_docstring[:-1]
+            + """
+ * @deprecated Unversioned trait view classes are deprecated, please use
+ * MultipleVersionsTrait_v1 explicitly.
+ */"""
+        )
+
+        actual_docstring = docstring_for(
+            "openassetio_traitgen_test_all",
+            is_specification=False,
+            namespace="aNamespace",
+            name="MultipleVersionsTrait",
+            version="",
+        )
+
+        assert actual_docstring == expected_docstring
 
 
 class Test_cpp_package_all_specifications_test_TwoLocalTraitsSpecification:
