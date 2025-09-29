@@ -593,10 +593,15 @@ class Test_MultipleVersionsTrait:
         # Ensure no overrides of the base class.
         assert user_defined_attr_names == []
 
-    def test_unversioned_has_same_docstring_as_version_1(self, module_all):
+    def test_unversioned_has_same_docstring_as_version_1_but_with_deprecation(self, module_all):
         assert (
             module_all.traits.aNamespace.MultipleVersionsTrait.__doc__
-            == module_all.traits.aNamespace.MultipleVersionsTrait_v1.__doc__
+            == module_all.traits.aNamespace.MultipleVersionsTrait_v1.__doc__.rstrip()
+            + """
+
+    @deprecated Unversioned trait view classes are deprecated, please
+    use MultipleVersionsTrait_v1 explicitly.
+    """
         )
         assert (
             module_all.traits.aNamespace.MultipleVersionsTrait.__doc__
@@ -840,7 +845,6 @@ def warnings_exotic_values():
         (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 'p$' to 'P' for property accessor name"),
         (logging.WARNING, "Conforming 'p$' to 'p' for variable name"),
-        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 's!n' to 's_n' for module name"),
         (logging.WARNING, "Conforming 's^' to 'S' for class name"),
