@@ -158,16 +158,24 @@ TEST_CASE("openassetio_traitgen_test_all - traits have expected IDs") {
         "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2");
 }
 
+// Suppress [[deprecated]] warnings, i.e. unversioned trait view class.
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+
 SCENARIO("Unversioned trait") {
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait;
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v1;
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v2;
 
   THEN("unversioned trait is a subclass of v1") {
+    // ReSharper disable once CppDeprecatedEntity
     STATIC_REQUIRE(std::is_base_of_v<MultipleVersionsTrait_v1, MultipleVersionsTrait>);
   }
 
   WHEN("ID of unversioned trait is retrieved") {
+    // ReSharper disable once CppDeprecatedEntity
     const auto traitId = MultipleVersionsTrait::kId;
 
     THEN("unversioned trait ID is the same as v1") {
@@ -180,6 +188,8 @@ SCENARIO("Unversioned trait") {
     const auto traitsData = openassetio::trait::TraitsData::make();
     // Construct rather than using static_assert to be confident that
     // the constructor is available.
+
+    // ReSharper disable once CppDeprecatedEntity
     const MultipleVersionsTrait trait{traitsData};
 
     THEN("unversioned trait has same members as v1") {
@@ -188,6 +198,11 @@ SCENARIO("Unversioned trait") {
     }
   }
 }
+
+// Undo [[deprecated]] warnings suppression.
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 namespace openassetio_traitgen_test_traits_only {
 // Will fail if `specifications` is already defined (i.e. as namespace).

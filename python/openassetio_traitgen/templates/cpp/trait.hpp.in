@@ -146,7 +146,9 @@ private:
  * @deprecated Unversioned trait view classes are deprecated, please use
  * {{ base_classname }}_v1 explicitly.
  */
-class {{ base_classname }} : public {{ base_classname }}_v1 {
+class
+[[deprecated("Unversioned trait view classes are deprecated, please use {{ base_classname }}_v1 explicitly")]]
+{{ base_classname }} : public {{ base_classname }}_v1 {
 public:
 using {{ base_classname }}_v1::{{ base_classname }}_v1;
 };
