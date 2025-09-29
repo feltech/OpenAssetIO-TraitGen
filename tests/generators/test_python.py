@@ -845,11 +845,6 @@ def warnings_exotic_values():
         (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 'p$' to 'P' for property accessor name"),
         (logging.WARNING, "Conforming 'p$' to 'p' for variable name"),
-        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 's!n' to 's_n' for module name"),
         (logging.WARNING, "Conforming 's^' to 'S' for class name"),
-        (logging.WARNING, "Conforming 't!n' to 't_n' for module name"),
-        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
-        (logging.WARNING, "Conforming 't!n' to 't_n' for module name"),
-        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
     ]
