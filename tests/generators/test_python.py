@@ -574,6 +574,34 @@ class Test_MultipleVersionsTrait:
         assert not hasattr(module_all.traits.aNamespace.MultipleVersionsTrait_v2, "getOldProperty")
         assert hasattr(module_all.traits.aNamespace.MultipleVersionsTrait_v2, "getNewProperty")
 
+    def test_unversioned_is_version_1(self, module_all):
+        assert issubclass(
+            module_all.traits.aNamespace.MultipleVersionsTrait,
+            module_all.traits.aNamespace.MultipleVersionsTrait_v1,
+        )
+
+        # Create an empty class and get its __dict__ keys.
+        builtin_attr_names = set(type("Empty", (), {}).__dict__.keys())
+
+        # Get attributes defined on subclass, minus builtin attrs.
+        user_defined_attr_names = [
+            attr_name
+            for attr_name in module_all.traits.aNamespace.MultipleVersionsTrait.__dict__
+            if attr_name not in builtin_attr_names
+        ]
+        # Ensure no overrides of the base class.
+        assert user_defined_attr_names == []
+
+    def test_unversioned_has_same_docstring_as_version_1(self, module_all):
+        assert (
+            module_all.traits.aNamespace.MultipleVersionsTrait.__doc__
+            == module_all.traits.aNamespace.MultipleVersionsTrait_v1.__doc__
+        )
+        assert (
+            module_all.traits.aNamespace.MultipleVersionsTrait.__doc__
+            != module_all.traits.aNamespace.MultipleVersionsTrait_v2.__doc__
+        )
+
 
 class Test_LocalAndExternalTraitSpecification:
     def test_external_trait_accessor_is_of_expected_type(
@@ -811,6 +839,8 @@ def warnings_exotic_values():
         (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 'p$' to 'P' for property accessor name"),
         (logging.WARNING, "Conforming 'p$' to 'p' for variable name"),
+        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
+        (logging.WARNING, "Conforming 't&' to 'T' for class name"),
         (logging.WARNING, "Conforming 's!n' to 's_n' for module name"),
         (logging.WARNING, "Conforming 's^' to 'S' for class name"),
         (logging.WARNING, "Conforming 't!n' to 't_n' for module name"),
