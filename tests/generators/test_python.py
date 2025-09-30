@@ -709,6 +709,70 @@ class Test_MultipleVersionsOfTraitSpecification:
             }
         )
 
+    def test_unversioned_is_version_1(self, module_all):
+        assert issubclass(
+            module_all.specifications.test.MultipleVersionsOfTraitSpecification,
+            module_all.specifications.test.MultipleVersionsOfTraitSpecification_v1,
+        )
+
+        # Create an empty class and get its __dict__ keys.
+        builtin_attr_names = set(type("Empty", (), {}).__dict__.keys())
+
+        # Get attributes defined on subclass, minus builtin attrs.
+        user_defined_attr_names = [
+            attr_name
+            for attr_name in module_all.traits.aNamespace.MultipleVersionsTrait.__dict__
+            if attr_name not in builtin_attr_names
+        ]
+        # Ensure no overrides of the base class, other than constructor
+        # (for deprecation warning).
+        assert user_defined_attr_names == ["__init__"]
+
+    def test_unversioned_has_same_docstring_as_version_1_but_with_deprecation(self, module_all):
+        spec = module_all.specifications.test.MultipleVersionsOfTraitSpecification
+        spec_v1 = module_all.specifications.test.MultipleVersionsOfTraitSpecification_v1
+        assert (
+            spec.__doc__
+            == spec_v1.__doc__.rstrip()
+            + """
+
+    @deprecated Unversioned specification view classes are deprecated,
+    please use MultipleVersionsOfTraitSpecification_v1 explicitly.
+    """
+        )
+        assert (
+            module_all.specifications.test.MultipleVersionsOfTraitSpecification.__doc__
+            != module_all.specifications.test.MultipleVersionsOfTraitSpecification_v2.__doc__
+        )
+
+    def test_when_unversioned_constructed_then_logs_deprecation_warning(self, module_all):
+        expected_warning = (
+            "Unversioned specification view classes are deprecated. Please switch from"
+            " MultipleVersionsOfTraitSpecification to MultipleVersionsOfTraitSpecification_v1."
+        )
+        with pytest.deprecated_call(match=expected_warning):
+            module_all.specifications.test.MultipleVersionsOfTraitSpecification(TraitsData())
+
+        with pytest.deprecated_call(match=expected_warning):
+            module_all.specifications.test.MultipleVersionsOfTraitSpecification.create()
+
+    def test_when_unversioned_created_then_is_correct_instance(self, module_all):
+        spec = module_all.specifications.test.MultipleVersionsOfTraitSpecification.create()
+
+        assert isinstance(
+            spec, module_all.specifications.test.MultipleVersionsOfTraitSpecification
+        )
+
+    def test_when_unversioned_constructed_then_calls_base_constructor(self, module_all):
+        data = TraitsData()
+        spec = module_all.specifications.test.MultipleVersionsOfTraitSpecification(data)
+        expected_value = "some string"
+        # Ensure TraitsData is passed through (i.e. no AttributeError).
+        spec.multipleVersionsTrait().setOldProperty(expected_value)
+        actual_value = spec.multipleVersionsTrait().getOldProperty()
+
+        assert actual_value == expected_value
+
 
 class Test_generate:
     def test_when_files_created_then_creation_callback_is_called(

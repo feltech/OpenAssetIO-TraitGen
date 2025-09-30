@@ -119,6 +119,8 @@ specifications:
               - namespace: aNamespace
                 name: MultipleVersions
                 version: "1"
+            usage:
+              - entity
           "2":
             description: Version 2 of a specification referencing version 2 of a trait.
             traitSet:

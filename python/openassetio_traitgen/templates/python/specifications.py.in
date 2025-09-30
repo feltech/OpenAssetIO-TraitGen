@@ -87,8 +87,30 @@ class {{ specification.id | to_py_class_name }}Specification_v{{ specification.v
         return {{ trait.package | to_py_module_name }}.traits.{{trait.namespace | to_py_module_name }}.{{ trait.name | to_py_class_name }}Trait_v{{ trait.version }}(self.traitsData())
         {% endif -%}
 
-
+{% endfor %}
 {% endfor -%}
 
+{% for specification in namespace.members -%}
+{%- if specification.version == "1" -%}
+{%- set spec_basename = specification.id | to_py_class_name ~ "Specification" %}
+class {{ spec_basename }}({{ spec_basename }}_v1):
+    """
+    {{ specification.description | wordwrap(68) | indent(4) }}
+    {% if specification.usage -%}
+    Usage: {{ specification.usage | join(', ') }}
+    {%- endif %}
 
-{% endfor -%}
+    @deprecated Unversioned specification view classes are deprecated,
+    please use {{ spec_basename }}_v1 explicitly.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        import warnings
+        warnings.warn(
+            "Unversioned specification view classes are deprecated. Please switch from"
+            " {{ spec_basename }} to {{ spec_basename }}_v1.",
+            DeprecationWarning
+        )
+
+{% endif -%}
+{% endfor %}

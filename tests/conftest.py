@@ -298,7 +298,7 @@ def declaration_all():
                         description=(
                             "Version 1 of a specification referencing version 1 of a trait."
                         ),
-                        usage=[],
+                        usage=["entity"],
                         trait_set=[
                             datamodel.TraitReference(
                                 id="openassetio-traitgen-test-all:aNamespace.MultipleVersions",
