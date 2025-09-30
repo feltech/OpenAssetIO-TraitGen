@@ -88,6 +88,7 @@ def _unpack_specifications(model: dict, package_id: str) -> List[datamodel.Names
         specifications = [
             datamodel.SpecificationDeclaration(
                 id=name,
+                deprecated=props.get("deprecated", False),
                 version=version_num,
                 description=definition.get("description", "").strip(),
                 trait_set=_unpack_trait_set(definition["traitSet"], package_id),
@@ -194,6 +195,7 @@ def _unpack_traits(
             datamodel.TraitDeclaration(
                 id=_build_trait_id(package_id, namespace, name, version_num),
                 name=name,
+                deprecated=props.get("deprecated", False),
                 version=version_num,
                 description=definition.get("description", "").strip(),
                 properties=_unpack_properties(definition.get("properties", {})),

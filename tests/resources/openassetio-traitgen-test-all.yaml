@@ -58,6 +58,12 @@ traits:
                 type: integer
                 description: A new int-typed property.
 
+      Deprecated:
+        deprecated: true
+        versions:
+          "1":
+            description: A deprecated trait.
+
   anotherNamespace:
     description: Another Namespace
     members:
@@ -130,3 +136,13 @@ specifications:
               - namespace: aNamespace
                 name: MultipleVersions
                 version: "2"
+
+      Deprecated:
+        deprecated: true
+        versions:
+          "1":
+            description: A deprecated specification.
+            traitSet:
+              - namespace: aNamespace
+                name: Deprecated
+                version: "1"

@@ -40,6 +40,10 @@
                   "description": "A single Trait. The object's key forms the name of the trait, and will be used to generate the class name (or similar) in resulting code. Trait names need to be unique within each namespace.",
                   "additionalProperties": false,
                   "properties": {
+                    "deprecated": {
+                      "type": "boolean",
+                      "description": "Whether trait is deprecated."
+                    },
                     "versions": {
                       "type": "object",
                       "description": "Versions of this trait.",
@@ -149,6 +153,10 @@
                   "description": "A single Specification. The object's key forms the name of the Specification, and will be used to generate the class name (or similar) in resulting code. Specification names need to be unique within each namespace.",
                   "additionalProperties": false,
                   "properties": {
+                    "deprecated": {
+                      "type": "boolean",
+                      "description": "Whether this Specification is deprecated."
+                    },
                     "versions": {
                       "type": "object",
                       "description": "Versions of this specification.",

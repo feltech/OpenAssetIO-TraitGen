@@ -92,6 +92,7 @@ def some_trait_declarations():
         datamodel.TraitDeclaration(
             id="package:namespace.Name1",
             name="Name1",
+            deprecated=False,
             version="1",
             description="A trait",
             properties=[],
@@ -100,6 +101,7 @@ def some_trait_declarations():
         datamodel.TraitDeclaration(
             id="package:namespace.Name2",
             name="Name2",
+            deprecated=False,
             version="1",
             description="Another trait",
             properties=[],
@@ -113,6 +115,7 @@ def some_specification_declarations():
     return [
         datamodel.SpecificationDeclaration(
             id="Specification1",
+            deprecated=False,
             version="1",
             description="A specification",
             usage=[],
@@ -137,6 +140,7 @@ def some_specification_declarations():
         ),
         datamodel.SpecificationDeclaration(
             id="Specification2",
+            deprecated=False,
             version="1",
             description="Another specification",
             usage=[],
