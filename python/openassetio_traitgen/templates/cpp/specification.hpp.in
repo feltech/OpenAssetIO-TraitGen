@@ -99,6 +99,33 @@ private:
 };
 
 {% endfor %}
+{%- set specification = versions[0] -%}
+{%- set base_classname = specification.id | to_cpp_class_name ~ 'Specification' %}
+/**
+ * {{ specification.description | wordwrap(69, wrapstring="\n* ") | indent(1) }}
+{%- if specification.usage %}
+ * Usage: {{ specification.usage | join(', ') }}
+{%- endif %}
+ *
+ * @deprecated Unversioned specification view classes are deprecated,
+ * please use {{ base_classname }}_v1 explicitly.
+ */
+class
+[[deprecated("Unversioned specification view classes are deprecated, please use {{ base_classname }}_v1 explicitly")]]
+{{ base_classname }} : public {{ base_classname }}_v1 {
+public:
+  using {{ base_classname }}_v1::{{ base_classname }}_v1;
+
+ /**
+  * Returns a new instance of the Specification, holding a new
+  * TraitsData instance, imbued with the specification's traits.
+  */
+  static {{ base_classname }} create() {
+    return {{ base_classname }}{
+      openassetio_abi::trait::TraitsData::make(kTraitSet)};
+  }
+};
 }  // namespace specifications::{{ namespace.id | to_cpp_namespace_name }}
 }  // namespace {{ traitgen_abi_version }}
 }  // namespace {{ package.id | to_cpp_namespace_name }}
+

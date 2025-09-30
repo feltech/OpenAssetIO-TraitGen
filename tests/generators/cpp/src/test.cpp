@@ -678,11 +678,11 @@ SCENARIO("Specification-provided trait views updating wrapped TraitsData") {
 }
 
 SCENARIO("Specifications using different versions of traits") {
+  using openassetio_traitgen_test_all::specifications::test::
+      MultipleVersionsOfTraitSpecification_v1;
+  using openassetio_traitgen_test_all::specifications::test::
+      MultipleVersionsOfTraitSpecification_v2;
   GIVEN("two versions of a specification that expose different versions of the same traits") {
-    using openassetio_traitgen_test_all::specifications::test::
-        MultipleVersionsOfTraitSpecification_v1;
-    using openassetio_traitgen_test_all::specifications::test::
-        MultipleVersionsOfTraitSpecification_v2;
     using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v1;
     using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v2;
     using openassetio_traitgen_test_all::traits::aNamespace::NoPropertiesTrait_v1;
@@ -696,6 +696,53 @@ SCENARIO("Specifications using different versions of traits") {
           std::is_same_v<std::decay_t<decltype(MultipleVersionsOfTraitSpecification_v2::create()
                                                    .multipleVersionsTrait())>,
                          MultipleVersionsTrait_v2>);
+    }
+
+    AND_GIVEN("an unversioned specification type") {
+      // Suppress [[deprecated]] warnings, i.e. unversioned
+      // specification view class.
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+      // ReSharper disable CppDeprecatedEntity
+
+      using openassetio_traitgen_test_all::specifications::test::
+          MultipleVersionsOfTraitSpecification;
+
+      THEN("the trait set of the unversioned specification matches that of v1") {
+        CHECK(MultipleVersionsOfTraitSpecification::kTraitSet ==
+              MultipleVersionsOfTraitSpecification_v1::kTraitSet);
+        CHECK(MultipleVersionsOfTraitSpecification::kTraitSet !=
+              MultipleVersionsOfTraitSpecification_v2::kTraitSet);
+      }
+
+      WHEN("unversioned specification is constructed") {
+        const auto traitsData = openassetio::trait::TraitsData::make();
+        // Construct rather than using static_assert to be confident that
+        // the constructor is available.
+        const MultipleVersionsOfTraitSpecification specification{traitsData};
+
+        THEN("unversioned specification has same members as v1") {
+          // Just checking that the member function exists.
+          CHECK(!specification.multipleVersionsTrait().getOldProperty().has_value());
+        }
+      }
+
+      WHEN("unversioned specification is created") {
+        const auto specification = MultipleVersionsOfTraitSpecification::create();
+
+        THEN("unversioned specification is of the correct class") {
+          STATIC_REQUIRE(std::is_same_v<std::decay_t<decltype(specification)>,
+                                        MultipleVersionsOfTraitSpecification>);
+        }
+      }
+
+      // Undo [[deprecated]] warnings suppression.
+      // ReSharper restore CppDeprecatedEntity
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
     }
   }
 }
