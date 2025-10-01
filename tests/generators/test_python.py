@@ -628,6 +628,25 @@ class Test_MultipleVersionsTrait:
         assert actual_value == expected_value
 
 
+class Test_DeprecatedTrait:
+    def test_when_constructed_then_logs_deprecation_warning(self, module_all):
+        expected_warning = (
+            "The 'openassetio-traitgen-test-all:aNamespace.Deprecated' trait is deprecated."
+        )
+        with pytest.deprecated_call(match=expected_warning):
+            module_all.traits.aNamespace.DeprecatedTrait_v1(TraitsData())
+
+    def test_docstring_contains_deprecation_notice(self, module_all):
+        assert (
+            module_all.traits.aNamespace.DeprecatedTrait_v1.__doc__
+            == """
+    A deprecated trait.
+
+    @deprecated This trait is flagged for future removal.
+    """
+        )
+
+
 class Test_LocalAndExternalTraitSpecification:
     def test_external_trait_accessor_is_of_expected_type(
         self, local_and_external_trait_specification, module_traits_only
@@ -772,6 +791,26 @@ class Test_MultipleVersionsOfTraitSpecification:
         actual_value = spec.multipleVersionsTrait().getOldProperty()
 
         assert actual_value == expected_value
+
+
+class Test_DeprecatedSpecification:
+    def test_when_constructed_then_logs_deprecation_warning(self, module_all):
+        expected_warning = (
+            "The 'test.Deprecated' specification of the 'openassetio_traitgen_test_all' package is"
+            " deprecated."
+        )
+        with pytest.deprecated_call(match=expected_warning):
+            module_all.specifications.test.DeprecatedSpecification_v1(TraitsData())
+
+    def test_docstring_contains_deprecation_notice(self, module_all):
+        assert (
+            module_all.specifications.test.DeprecatedSpecification_v1.__doc__
+            == """
+    A deprecated specification.
+
+    @deprecated This specification is flagged for future removal.
+    """
+        )
 
 
 class Test_generate:

@@ -19,9 +19,13 @@ from openassetio.trait import TraitsData
 class {{ trait.name | to_py_class_name }}Trait_v{{ trait.version }}:
     """
     {{ trait.description | wordwrap(68) | indent(4) }}
-    {% if trait.usage -%}
+{%- if trait.usage %}
     Usage: {{ trait.usage | join(', ') }}
-    {% endif -%}
+{%- endif %}
+{%- if trait.deprecated %}
+
+    @deprecated This trait is flagged for future removal.
+{%- endif %}
     """
     kId = "{{ trait.id }}"
 
@@ -32,6 +36,13 @@ class {{ trait.name | to_py_class_name }}Trait_v{{ trait.version }}:
         @param traitsData @fqref{TraitsData}} "TraitsData" The target
         data that holds/will hold the traits properties.
         """
+{%- if trait.deprecated %}
+        warnings.warn(
+            "The '{{ trait.id }}' trait is deprecated.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+{%- endif %}
         self.__data = traitsData
 
     def isImbued(self):

@@ -18,11 +18,13 @@
 #include <openassetio_traitgen_test_all/traits/anotherNamespace.hpp>
 #include <openassetio_traitgen_test_specifications_only/specifications/test.hpp>
 #elif defined OPENASSETIO_TRAITGENTEST_INCLUDES_CLASS
+#include <openassetio_traitgen_test_all/specifications/test/DeprecatedSpecification.hpp>
 #include <openassetio_traitgen_test_all/specifications/test/LocalAndExternalTraitSpecification.hpp>
 #include <openassetio_traitgen_test_all/specifications/test/MultipleVersionsOfTraitSpecification.hpp>
 #include <openassetio_traitgen_test_all/specifications/test/OneExternalTraitSpecification.hpp>
 #include <openassetio_traitgen_test_all/specifications/test/TwoLocalTraitsSpecification.hpp>
 #include <openassetio_traitgen_test_all/traits/aNamespace/AllPropertiesTrait.hpp>
+#include <openassetio_traitgen_test_all/traits/aNamespace/DeprecatedTrait.hpp>
 #include <openassetio_traitgen_test_all/traits/aNamespace/MultipleVersionsTrait.hpp>
 #include <openassetio_traitgen_test_all/traits/aNamespace/NoPropertiesMultipleUsageTrait.hpp>
 #include <openassetio_traitgen_test_all/traits/aNamespace/NoPropertiesTrait.hpp>
@@ -163,6 +165,7 @@ TEST_CASE("openassetio_traitgen_test_all - traits have expected IDs") {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
+// ReSharper disable CppDeprecatedEntity
 
 SCENARIO("Unversioned trait") {
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait;
@@ -170,12 +173,10 @@ SCENARIO("Unversioned trait") {
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v2;
 
   THEN("unversioned trait is a subclass of v1") {
-    // ReSharper disable once CppDeprecatedEntity
     STATIC_REQUIRE(std::is_base_of_v<MultipleVersionsTrait_v1, MultipleVersionsTrait>);
   }
 
   WHEN("ID of unversioned trait is retrieved") {
-    // ReSharper disable once CppDeprecatedEntity
     const auto traitId = MultipleVersionsTrait::kId;
 
     THEN("unversioned trait ID is the same as v1") {
@@ -189,7 +190,6 @@ SCENARIO("Unversioned trait") {
     // Construct rather than using static_assert to be confident that
     // the constructor is available.
 
-    // ReSharper disable once CppDeprecatedEntity
     const MultipleVersionsTrait trait{traitsData};
 
     THEN("unversioned trait has same members as v1") {
@@ -199,7 +199,17 @@ SCENARIO("Unversioned trait") {
   }
 }
 
+TEST_CASE("Deprecated trait causes deprecation compiler warning") {
+  // Ensure that the deprecated trait does indeed cause a deprecation
+  // warning if used. Note that to see this we must remove the
+  // diagnostic suppression.
+  using openassetio_traitgen_test_all::traits::aNamespace::DeprecatedTrait_v1;
+
+  const DeprecatedTrait_v1 trait{openassetio::trait::TraitsData::make()};
+}
+
 // Undo [[deprecated]] warnings suppression.
+// ReSharper restore CppDeprecatedEntity
 #if defined(__clang__) || defined(__GNUC__)
 #pragma GCC diagnostic pop
 #endif
@@ -677,6 +687,12 @@ SCENARIO("Specification-provided trait views updating wrapped TraitsData") {
   }
 }
 
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+// ReSharper disable CppDeprecatedEntity
+
 SCENARIO("Specifications using different versions of traits") {
   using openassetio_traitgen_test_all::specifications::test::
       MultipleVersionsOfTraitSpecification_v1;
@@ -701,11 +717,6 @@ SCENARIO("Specifications using different versions of traits") {
     AND_GIVEN("an unversioned specification type") {
       // Suppress [[deprecated]] warnings, i.e. unversioned
       // specification view class.
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-      // ReSharper disable CppDeprecatedEntity
 
       using openassetio_traitgen_test_all::specifications::test::
           MultipleVersionsOfTraitSpecification;
@@ -737,14 +748,22 @@ SCENARIO("Specifications using different versions of traits") {
                                         MultipleVersionsOfTraitSpecification>);
         }
       }
-
-      // Undo [[deprecated]] warnings suppression.
-      // ReSharper restore CppDeprecatedEntity
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
     }
   }
 }
+
+TEST_CASE("Deprecated specification causes deprecation compiler warning") {
+  using openassetio_traitgen_test_all::specifications::test::DeprecatedSpecification_v1;
+  // Ensure that the deprecated specification does indeed cause a
+  // deprecation warning if used. Note that to see this we must
+  // remove the diagnostic suppression.
+  const auto spec = DeprecatedSpecification_v1::create();
+}
+
+// Undo [[deprecated]] warnings suppression.
+// ReSharper restore CppDeprecatedEntity
+#if defined(__clang__) || defined(__GNUC__)
+#pragma GCC diagnostic pop
+#endif
 
 // NOLINTEND(bugprone-chained-comparison)

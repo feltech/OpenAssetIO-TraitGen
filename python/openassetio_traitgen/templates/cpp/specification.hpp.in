@@ -44,8 +44,15 @@ namespace specifications::{{ namespace.id | to_cpp_namespace_name }} {
 {%- if specification.usage %}
  * Usage: {{ specification.usage | join(', ') }}
 {%- endif %}
+{%- if specification.deprecated %}
+ *
+ * @deprecated This specification is flagged for future removal.
+{%- endif %}
  */
-class {{ classname }} {
+class
+{%- if specification.deprecated %}
+[[deprecated("The '{{ namespace.id | to_cpp_namespace_name }}.{{ specification.id }}' specification of the '{{ package.id | to_cpp_namespace_name }}' package is deprecated.")]]
+{% endif %} {{ classname }} {
 public:
   inline static const openassetio_abi::trait::TraitSet kTraitSet{
     {%- for trait in specification.trait_set %}

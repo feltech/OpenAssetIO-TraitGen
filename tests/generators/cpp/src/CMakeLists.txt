@@ -33,7 +33,10 @@ foreach (include_type package subpackage namespace class)
     )
     target_include_directories(
         ${_target_name}
-        PRIVATE
+        # Must make SYSTEM since e.g. DeprecatedSpecification inheriting
+        # from DeprecatedSpecification_v1 triggers deprecation warnings
+        # even if unused.
+        SYSTEM PRIVATE
         ${OPENASSETIO_TRAITGENTEST_ADDITIONAL_INCLUDE_DIRS}
     )
 

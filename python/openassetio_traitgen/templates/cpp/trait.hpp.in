@@ -29,8 +29,15 @@ namespace property = openassetio_abi::trait::property;
 {%- if trait.usage %}
  * Usage: {{ trait.usage | join(', ') }}
 {%- endif %}
+{%- if trait.deprecated %}
+ *
+ * @deprecated This trait is flagged for future removal.
+{%- endif %}
  */
-class {{ classname }} {
+class
+{%- if trait.deprecated %}
+[[deprecated("The '{{ trait.id }}' trait is deprecated.")]]
+{% endif %} {{ classname }} {
 public:
   static inline const openassetio_abi::trait::TraitId kId = "{{ trait.id }}";
 

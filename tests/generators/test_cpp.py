@@ -21,7 +21,7 @@ import functools
 # pylint: disable=invalid-name,redefined-outer-name
 # pylint: disable=too-few-public-methods,too-many-arguments
 # pylint: disable=missing-class-docstring,missing-function-docstring
-# pylint: disable=too-many-return-statements
+# pylint: disable=too-many-return-statements,too-many-lines
 
 import logging
 import os
@@ -349,6 +349,24 @@ class Test_cpp_package_all_traits_aNamespace_MultipleVersionsTrait:
         assert actual_docstring == expected_docstring
 
 
+class Test_cpp_package_all_traits_aNamespace_DeprecatedTrait:
+    def test_docstring_contains_deprecation_warning(self, docstring_for):
+        assert (
+            docstring_for(
+                "openassetio_traitgen_test_all",
+                is_specification=False,
+                namespace="aNamespace",
+                name="DeprecatedTrait",
+                version="1",
+            )
+            == """/**
+ * A deprecated trait.
+ *
+ * @deprecated This trait is flagged for future removal.
+ */"""
+        )
+
+
 class Test_cpp_package_all_specifications_test_TwoLocalTraitsSpecification:
     def test_docstring_contains_description(self, docstring_for):
         docstring_for(
@@ -599,6 +617,24 @@ class Test_cpp_package_all_specifications_test_MultipleVersionsOfTrait:
         assert actual_docstring == expected_docstring
 
 
+class Test_cpp_package_all_specifications_test_DeprecatedSpecification:
+    def test_docstring_contains_deprecation_warning(self, docstring_for):
+        assert (
+            docstring_for(
+                "openassetio_traitgen_test_all",
+                is_specification=True,
+                namespace="test",
+                name="DeprecatedSpecification",
+                version="1",
+            )
+            == """/**
+ * A deprecated specification.
+ *
+ * @deprecated This specification is flagged for future removal.
+ */"""
+        )
+
+
 class Test_generate:
     def test_when_files_created_then_creation_callback_is_called(
         self, declaration_exotic_values, creations_exotic_values, tmp_path_factory
@@ -779,6 +815,7 @@ def docstring_for(rootnode_for, cpp_language):
         overload.
         @return: String containing docstring for selected element.
         """
+        # pylint: disable=too-many-locals
         root_node = rootnode_for(package_name, is_specification, namespace, name)
 
         if is_specification is None:
