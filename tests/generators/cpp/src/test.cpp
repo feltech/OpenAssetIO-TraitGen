@@ -160,13 +160,6 @@ TEST_CASE("openassetio_traitgen_test_all - traits have expected IDs") {
         "openassetio-traitgen-test-all:aNamespace.MultipleVersions.v2");
 }
 
-// Suppress [[deprecated]] warnings, i.e. unversioned trait view class.
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-// ReSharper disable CppDeprecatedEntity
-
 SCENARIO("Unversioned trait") {
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait;
   using openassetio_traitgen_test_all::traits::aNamespace::MultipleVersionsTrait_v1;
@@ -202,17 +195,12 @@ SCENARIO("Unversioned trait") {
 TEST_CASE("Deprecated trait causes deprecation compiler warning") {
   // Ensure that the deprecated trait does indeed cause a deprecation
   // warning if used. Note that to see this we must remove the
-  // diagnostic suppression.
+  // diagnostic suppression. See
+  // openassetio-traitgentest-deprecations CTest target.
   using openassetio_traitgen_test_all::traits::aNamespace::DeprecatedTrait_v1;
 
   const DeprecatedTrait_v1 trait{openassetio::trait::TraitsData::make()};
 }
-
-// Undo [[deprecated]] warnings suppression.
-// ReSharper restore CppDeprecatedEntity
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
 
 namespace openassetio_traitgen_test_traits_only {
 // Will fail if `specifications` is already defined (i.e. as namespace).
@@ -687,12 +675,6 @@ SCENARIO("Specification-provided trait views updating wrapped TraitsData") {
   }
 }
 
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-// ReSharper disable CppDeprecatedEntity
-
 SCENARIO("Specifications using different versions of traits") {
   using openassetio_traitgen_test_all::specifications::test::
       MultipleVersionsOfTraitSpecification_v1;
@@ -715,9 +697,6 @@ SCENARIO("Specifications using different versions of traits") {
     }
 
     AND_GIVEN("an unversioned specification type") {
-      // Suppress [[deprecated]] warnings, i.e. unversioned
-      // specification view class.
-
       using openassetio_traitgen_test_all::specifications::test::
           MultipleVersionsOfTraitSpecification;
 
@@ -756,14 +735,9 @@ TEST_CASE("Deprecated specification causes deprecation compiler warning") {
   using openassetio_traitgen_test_all::specifications::test::DeprecatedSpecification_v1;
   // Ensure that the deprecated specification does indeed cause a
   // deprecation warning if used. Note that to see this we must
-  // remove the diagnostic suppression.
+  // remove the diagnostic suppression. See
+  // openassetio-traitgentest-deprecations CTest target.
   const auto spec = DeprecatedSpecification_v1::create();
 }
-
-// Undo [[deprecated]] warnings suppression.
-// ReSharper restore CppDeprecatedEntity
-#if defined(__clang__) || defined(__GNUC__)
-#pragma GCC diagnostic pop
-#endif
 
 // NOLINTEND(bugprone-chained-comparison)
